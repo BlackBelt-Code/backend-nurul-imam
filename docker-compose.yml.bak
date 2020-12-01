@@ -1,0 +1,69 @@
+version: "3.7"
+services:
+  web:
+    build:
+      args:
+        user: nurul-imam
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: nurul-imam
+    container_name: backend-apps
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - db
+      - nginx
+      - phpmyadmin
+    networks:
+      - nurul-imam
+
+  db:
+    image: mysql:5.7
+    container_name: backend-db
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: nurul-imam-db
+      MYSQL_PASSWORD: strongrootpassword
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: strongrootpassword
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - nurul-imam
+    ports:
+      - "3306:3306"
+
+  nginx:
+    image: nginx:alpine
+    container_name: backend-nginx
+    restart: unless-stopped
+    ports:
+      - 8004:80
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx:/etc/nginx/conf.d/
+    networks:
+      - nurul-imam
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.0.1
+    container_name: backend-phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      # PMA_USER: root
+      # PMA_PASSWORD: strongrootpassword
+    ports:
+      - "8082:80"
+    networks:
+      - nurul-imam
+
+networks:
+  nurul-imam:
+    driver: bridge
