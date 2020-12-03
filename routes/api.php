@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\NisnController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,6 +27,13 @@ Route::group(['namespace' => 'Api' ,'prefix' => 'V1'], function () {
     // User
     Route::group(['prefix' => 'user'], function(){
         Route::get('/', [UserController::class, 'index'])->name('api-user')->middleware('jwt.verify');
+        Route::get('/Authenticated', [UserController::class, 'getAuthenticated'])->middleware('jwt.verify');
+    });
+
+    // STUDENTS
+    Route::group(['prefix' => 'students'], function() {
+        Route::get('/Authenticated', [NisnController::class, 'index'])->name('api-students')->middleware('jwt.verify');
+        Route::post('/Authenticated/store', [NisnController::class, 'store'])->name('api-store')->middleware('jwt.verify');
     });
 });
 // Route::middleware('auth:api')->get('/user', function (Request $request) {

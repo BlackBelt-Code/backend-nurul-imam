@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Models\Nisn;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -55,5 +56,10 @@ class User extends Authenticatable implements JWTSubject
 
         return $query->select('*')->get();
 
+    }
+
+    public function nisn()
+    {
+        return $this->hasOne(Nisn::class);
     }
 } 
