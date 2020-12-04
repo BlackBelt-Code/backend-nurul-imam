@@ -84,7 +84,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {        
         try {
             $users = User::ForUser();
             return response()->json(['users' => $users], 200);
@@ -108,7 +108,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $users = User::ForUserId($id);
+            return response()->json(['users' => $users], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th], 500);
+        }
     }
 
     /**

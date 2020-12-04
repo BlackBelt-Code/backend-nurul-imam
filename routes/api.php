@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\NisnController;
 use App\Http\Controllers\Api\ParentController;
+use App\Http\Controllers\Api\StudentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,25 +26,40 @@ Route::group(['namespace' => 'Api' ,'prefix' => 'V1'], function () {
 
     // Reguster User
     Route::group(['prefix' => 'register'], function(){
+        
         Route::post('/', [UserController::class , 'register'])->name('api-register');
     });
 
     // User
     Route::group(['prefix' => 'user', 'middleware' => 'jwt.verify'], function(){
+        
         Route::get('/', [UserController::class, 'index'])->name('api-user');
+        
+        Route::get('/{id}', [UserController::class,'show'])->name('api-user-show');
+        
         Route::get('/Authenticated', [UserController::class, 'getAuthenticated'])->name('api-users');
     });
 
-    // STUDENTS
+    // STUDENTS ALL
     Route::group(['prefix' => 'students', 'middleware' => 'jwt.verify'], function() {
-        Route::get('/Authenticated', [NisnController::class, 'index'])->name('api-students');
-        Route::post('/Authenticated/store', [NisnController::class, 'store'])->name('api-students-store');
-    });
+       
+        // STUDENT
+        Route::get('/Authenticated', [StudentController::class, 'index'])->name('api-students');
+        Route::get('/Authenticated/store', [StudentController::class, 'store'])->name('api-students-store');
+        
+            // NISN
+            Route::group(['prefix' => 'nisn'], function() {
+                Route::get('/Authenticated', [NisnController::class, 'index'])->name('api-students-nisn');
+                Route::post('/Authenticated/store', [NisnController::class, 'store'])->name('api-students-nisn-store');
+            });
 
-    // Parents
-    Route::group(['prefix' => 'parents', 'middleware' => 'jwt.verify'], function(){
-        Route::get('/Authenticated', [ParentController::class , 'index'])->name('api-parents');
-        Route::post('/Authenticated/store', [ParentController::class , 'store'])->name('api-parents-store');
+            // Parents
+            Route::group(['prefix' => 'parents', 'middleware' => 'jwt.verify'], function(){
+                Route::get('/Authenticated', [ParentController::class , 'index'])->name('api-students-parents');
+                Route::post('/Authenticated/store', [ParentController::class , 'store'])->name('api-students-parents-store');
+            });
+
     });
+    
 });
 

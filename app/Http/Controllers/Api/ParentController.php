@@ -11,7 +11,7 @@ class ParentController extends Controller
 {
     public function index()
     {
-        $parentIndex = Parents::all();
+        $parentIndex = Parents::with('user')->get();
         try {
             if($parentIndex->count() > 0)
             {
