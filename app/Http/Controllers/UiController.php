@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 class UiController extends Controller
 {
     public function index() {
-        return view('ui.index')->render();
+
+        $title = 'Academic Schools';
+
+        return view('ui.index', 
+            [ 'title' => $title ])->render();
+    }
+
+    public function about()
+    {
+        $title = 'Academic About';
     }
 }

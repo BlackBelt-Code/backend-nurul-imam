@@ -9,6 +9,11 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class NisnController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.verify');
+    }
+    
     public function index()
     {
         $studentNisn = Nisn::with('user')->get();
