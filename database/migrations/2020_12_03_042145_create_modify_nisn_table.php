@@ -14,8 +14,8 @@ class CreateModifyNisnTable extends Migration
     public function up()
     {
         Schema::table('nisn', function (Blueprint $table) {
-            $table->bigInteger('user_id')->unsigned()->change();
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->bigInteger('student_id')->unsigned()->change();
+            $table->foreign('student_id')->references('id')->on('students')->onUpdate('cascade');
         });
     }
 
@@ -27,7 +27,7 @@ class CreateModifyNisnTable extends Migration
     public function down()
     {
         Schema::table('nisn', function (Blueprint $table) {
-            $table->dropForeign('nisn_user_id_foreign');
+            $table->dropForeign('nisn_student_id_foreign');
         });
     }
 }

@@ -16,7 +16,7 @@ class CreateNisnTable extends Migration
         Schema::create('nisn', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nisn')->default('12');
-            $table->integer('user_id');
+            $table->integer('student_id');
             $table->timestamps();
         });
     }

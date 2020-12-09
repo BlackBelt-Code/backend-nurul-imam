@@ -19,7 +19,7 @@ class CreateParentsTable extends Migration
             $table->string('mother_name');
             $table->string('jobs');
             $table->integer('contact');
-            $table->integer('user_id');
+            $table->integer('student_id');
             $table->timestamps();
         });
     }

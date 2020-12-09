@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ./:/var/www
+      - ./:/var/www:cached
     depends_on:
       - db
       - nginx
@@ -46,7 +46,7 @@ services:
     ports:
       - 8004:80
     volumes:
-      - ./:/var/www
+      - ./:/var/www:cached
       - ./docker/nginx:/etc/nginx/conf.d/
     networks:
       - backend

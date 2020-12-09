@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use App\Models\Nisn;
 use App\Models\Student;
-use App\Models\Parents;
+
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -58,9 +57,9 @@ class User extends Authenticatable implements JWTSubject
     public function scopeForUser($query) {
 
         return $query->select(['*'])
-        ->leftJoin('nisn', 'nisn.user_id', '=', 'users.id')
-        ->leftJoin('parents', 'parents.user_id', '=', 'users.id')
-        ->leftJoin('students', 'students.user_id', '=', 'users.id')
+        // ->leftJoin('nisn', 'nisn.user_id', '=', 'users.id')
+        // ->leftJoin('parents', 'parents.user_id', '=', 'users.id')
+        // ->leftJoin('students', 'students.user_id', '=', 'users.id')
         ->get();
 
     }
@@ -68,26 +67,16 @@ class User extends Authenticatable implements JWTSubject
     public function scopeForUserId($query, $q) {
 
         return $query->select(['*'])
-        ->leftJoin('nisn', 'nisn.user_id', '=', 'users.id')
-        ->leftJoin('parents', 'parents.user_id', '=', 'users.id')
-        ->leftJoin('students', 'students.user_id', '=', 'users.id')
+        // ->leftJoin('nisn', 'nisn.user_id', '=', 'users.id')
+        // ->leftJoin('parents', 'parents.user_id', '=', 'users.id')
+        // ->leftJoin('students', 'students.user_id', '=', 'users.id')
         ->where('users.id', $q)
         ->get();
 
     }
 
-    public function nisn()
-    {
-        return $this->hasOne(Nisn::class);
-    }
-
     public function student()
     {
         return $this->hasOne(Student::class);
-    }
-
-    public function parent()
-    {
-        return $this->hasOne(Parents::class);
     }
 } 

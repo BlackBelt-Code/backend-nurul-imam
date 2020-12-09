@@ -14,8 +14,8 @@ class CreateModifyParentsTable extends Migration
     public function up()
     {
         Schema::table('parents', function (Blueprint $table) {
-            $table->bigInteger('user_id')->unsigned()->index()->change();
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->bigInteger('student_id')->unsigned()->index()->change();
+            $table->foreign('student_id')->references('id')->on('students')->onUpdate('cascade');
         });
     }
 
@@ -27,7 +27,7 @@ class CreateModifyParentsTable extends Migration
     public function down()
     {
         Schema::table('parents', function (Blueprint $table) {
-            $table->dropForeign('parents_user_id_foreign');
+            $table->dropForeign('parents_student_id_foreign');
         });
     }
 }

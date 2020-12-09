@@ -12,23 +12,21 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware('jwt.verify');
-    }
-    
+{    
     public function login(Request $request)
     {
         $creadentials = $request->only('name', 'password');
 
-        try {
-            if(!$token = JWTAuth::attempt($creadentials)) {
-                return response()->json(['error' => 'invalid credentials'], 400);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+        if(!$token = JWTAuth::attempt($creadentials)) {
+            return response()->json(['error' => 'invalid credentials'], 400);
         }
+
+        // try {
+
+        // } catch (\Throwable $th) {
+        //     return response()->json(['error' => 'could_not_create_token'], 500);
+        // }
+        
         if(!empty(Auth()->user()->id)) {
             $user_id = Auth()->user()->id;
             $users = User::find($user_id);

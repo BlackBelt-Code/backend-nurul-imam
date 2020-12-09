@@ -41,11 +41,11 @@ Route::group(['namespace' => 'Api' ,'prefix' => 'V1'], function () {
     });
 
     // STUDENTS ALL
-    Route::group(['prefix' => 'students', 'middleware' => 'jwt.verify'], function() {
+    Route::group(['prefix' => 'students'], function() {
        
         // STUDENT
         Route::get('/Authenticated', [StudentController::class, 'index'])->name('api-students');
-        Route::get('/Authenticated/store', [StudentController::class, 'store'])->name('api-students-store');
+        Route::post('/Authenticated/store', [StudentController::class, 'StudentStore'])->name('api-students-store');
         
             // NISN
             Route::group(['prefix' => 'nisn'], function() {

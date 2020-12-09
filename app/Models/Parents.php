@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
+use App\Models\Student;
 
 class Parents extends Model
 {
@@ -12,7 +12,10 @@ class Parents extends Model
 
     protected $table = 'parents';
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    
+    protected $guarded = ['student_id'];
+
+    public function student() {
+        return $this->belongsTo(Student::class, 'id');
     }
 }
