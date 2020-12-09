@@ -73,12 +73,14 @@ class StudentController extends Controller
 
         $nisn               = $request->input('nisn');
 
+        $user_id = JWTAuth::parseToken()->authenticate();
+
         $studentStore = new Student();
         $studentStore->first_name       = $first_name;
         $studentStore->last_name        = $last_name;
         $studentStore->school_origin    = $school_origin;
         $studentStore->place            = $place ;
-        $studentStore->user_id          = 1 ;
+        $studentStore->user_id          = $user_id['id'] ;
         $studentStore->save();
 
         $parentStore = new Parents();
