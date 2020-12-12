@@ -45,6 +45,7 @@ Route::group(['namespace' => 'Api' ,'prefix' => 'V1'], function () {
        
         // STUDENT
         Route::get('/Authenticated', [StudentController::class, 'index'])->name('api-students');
+        Route::get('/Authenticated/detail/{id}', [StudentController::class,'getStudentDetail']);
         Route::post('/Authenticated/store', [StudentController::class, 'StudentStore'])->name('api-students-store');
         
             // NISN

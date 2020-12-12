@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Parents;
 use App\Models\Nisn;
+use App\Models\ClassStudent;
 
 class Student extends Model
 {
@@ -29,5 +30,8 @@ class Student extends Model
     {
         return $this->hasMany(Parents::class);
     }
-
+    
+    public function classStudent() {
+        return $this->hasMany(ClassStudent::class);
+    }
 }

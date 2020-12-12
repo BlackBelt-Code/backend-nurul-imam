@@ -18,6 +18,7 @@ section {
     --light-black: #2e2c2caf;
     --bggradient: linear-gradient( to bottom, #dd2567, #ff512f);
     --bggradient2: linear-gradient( to top, #dd2567, #ff512f);
+    --orange: #ff512f;
     --light-gray: rgba(255, 255, 255, 0.5)
 }
 
@@ -163,7 +164,7 @@ header .container .col-md-7 button {
 .section-3 {
     margin-top: 0vmin;
     height: 70vmin;
-    background: var(--bggradient2);
+    background: var(--orange);
 }
 
 .section-3 .col-md-12>h1 {
@@ -200,3 +201,8 @@ header .container .col-md-7 button {
 
 
 /* footer */
+
+footer {
+    background: var(--bggradient2);
+    padding: 10vmin;
+}

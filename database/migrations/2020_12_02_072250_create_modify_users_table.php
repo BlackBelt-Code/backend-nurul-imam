@@ -14,7 +14,7 @@ class CreateModifyUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('deleted_at');
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
