@@ -17,6 +17,8 @@ class UserController extends Controller
     {
         $creadentials = $request->only('name', 'password');
 
+        // var_dump($creadentials); die;
+
         if(!$token = JWTAuth::attempt($creadentials)) {
             return response()->json(['error' => 'invalid credentials'], 400);
         }

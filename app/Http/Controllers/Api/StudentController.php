@@ -11,10 +11,11 @@ use App\Models\ClassStudent;
 use App\Models\User;
 use App\Models\ClassRoom;
 use App\Models\ClassType;
+use App\Http\Controllers\Api\BaseController as BaseController;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class StudentController extends Controller
+class StudentController extends BaseController
 {
 
     // public function __construct()
@@ -24,7 +25,7 @@ class StudentController extends Controller
     
     public function index()
     {
-        $studentIndex = Student::with('user');
+        $studentIndex = Student::all();
         if($studentIndex->count() > 0) {
             $render = response()->json(['student' => $studentIndex], 200);
         } else {
@@ -65,12 +66,12 @@ class StudentController extends Controller
     }
 
     public function StudentStore(Request $request) {
-        try {
+        // try {
             
             $first_name         = $request->input('first_name');
             $last_name          = $request->input('last_name');
             $school_origin      = $request->input('school_origin');
-            $place              = $request->input('place');
+            $place              = $request->input('address');
 
             $father_name        = $request->input('father_name');
             $mother_name        = $request->input('mother_name');
@@ -82,14 +83,15 @@ class StudentController extends Controller
             $class_student      = $request->input('class_student');
             $class_type         = $request->input('class_type');
 
-            $user_id = JWTAuth::parseToken()->authenticate();
+            // $user_id = JWTAuth::parseToken()->authenticate();
 
             $studentStore = new Student();
             $studentStore->first_name       = $first_name;
             $studentStore->last_name        = $last_name;
             $studentStore->school_origin    = $school_origin;
             $studentStore->place            = $place ;
-            $studentStore->user_id          = $user_id['id'] ;
+            // $studentStore->user_id          = $user_id['id'] ;
+                        $studentStore->user_id          = 1 ;
             $studentStore->save();
 
             $parentStore = new Parents();
@@ -119,15 +121,15 @@ class StudentController extends Controller
                 'student_detail' => $classStudentStore, 
                 'nisn' => $nisnStore], 
             200);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' =>  'error', 
-                'student' => 'empty', 
-                'parents' => 'empty', 
-                'student_detail' => 'empty', 
-                'nisn' => 'empty'], 
-            400);
-        }
+        // } catch (\Throwable $th) {
+        //     return response()->json([
+        //         'status' =>  'error', 
+        //         'student' => 'empty', 
+        //         'parents' => 'empty', 
+        //         'student_detail' => 'empty', 
+        //         'nisn' => 'empty'], 
+        //     400);
+        // }
 
     }
 
@@ -175,5 +177,11 @@ class StudentController extends Controller
         ];
 
         return response()->json(['users' =>  $params] ,200);
+    }
+
+    public function getAll() {
+        $students = Student::with('user')->get();
+
+        return $this->sendResponse($students->toArray(), 'students success');
     }
 }
