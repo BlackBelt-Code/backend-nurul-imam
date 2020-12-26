@@ -184,6 +184,9 @@ class StudentController extends BaseController
     public function getAll() {
         $students = Student::with('user')->get();
 
+        if(is_null($students)) {
+            return $this->sendError('Student not found');
+        }
         return $this->sendResponse($students->toArray(), 'students success');
     }
 }
