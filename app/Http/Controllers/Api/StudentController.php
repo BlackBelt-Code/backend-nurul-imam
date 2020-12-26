@@ -83,15 +83,15 @@ class StudentController extends BaseController
             $class_student      = $request->input('class_student');
             $class_type         = $request->input('class_type');
 
-            // $user_id = JWTAuth::parseToken()->authenticate();
+            $user_id = JWTAuth::parseToken()->authenticate();
 
             $studentStore = new Student();
             $studentStore->first_name       = $first_name;
             $studentStore->last_name        = $last_name;
             $studentStore->school_origin    = $school_origin;
             $studentStore->place            = $place ;
-            // $studentStore->user_id          = $user_id['id'] ;
-                        $studentStore->user_id          = 1 ;
+            $studentStore->user_id          = $user_id['id'] ;
+            // $studentStore->user_id          = 1 ;
             $studentStore->save();
 
             $parentStore = new Parents();
