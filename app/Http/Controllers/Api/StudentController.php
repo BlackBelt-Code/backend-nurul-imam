@@ -27,9 +27,11 @@ class StudentController extends BaseController
     {
         $studentIndex = Student::all();
         if($studentIndex->count() > 0) {
-            $render = response()->json(['student' => $studentIndex], 200);
+            // $render = response()->json(['student' => $studentIndex], 200);
+            $render = $this->sendResponse($studentIndex->toArray(), 'success get');
         } else {
-            $render = response()->json(['student' => $studentIndex], 401);
+            // $render = response()->json(['student' => $studentIndex], 401);
+            return $this->sendError('Validation Error.', 'erros'); 
         }
 
         return $render;
